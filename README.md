@@ -26,6 +26,8 @@
 - [Map](#map)
 - [Queue](#queue)
 - [例外処理](#例外処理)
+- [文字列操作](#文字列操作)
+- [メモリ](#メモリ)
 
 ## Hello World
 
@@ -562,3 +564,51 @@ try {
 ```
 
 [目次へ戻る](#目次)
+
+## 文字列操作
+
+```java
+// 文字列調査
+boolean isSame1 = "A".equals("A");              // 文字列[0]と等しいか？
+boolean isSame2 = "A".equalsIgnoreCase("a");    // 文字列[0]と等しいか？（大文字小文字区別なし）
+boolean x = "".isEmpty();                       // 空文字か？
+int len = "abc".length();                       // 文字列の長さ
+
+// 文字列検索
+boolean isContainA = "ABC".contains("A");       // 文字列[0]を含むか？
+boolean isStartA = "ABC".startsWith("A");       // 文字列[0]で始まるか？
+boolean isEndZ = "XYZ".endsWith("Z");           // 文字列[0]で終わるか？
+int cPos = "abcdef".indexOf('c');               // 文字[0]の位置
+int dePos = "abcdef".indexOf("de");             // 文字列[0]の位置
+int yPos = "xyz".lastIndexOf('y');              // 文字[0]の位置 (後ろから検索して最初に登場する位置)
+int xyPos ="xyz".lastIndexOf("xy");             // 文字列[0]の位置 (後ろから検索して最初に登場する位置)
+
+// 文字列切り出し
+char pos1 = "abc".charAt(1);                    // 位置[0]の文字
+String str1 = "abcdef".substring(3);            // 位置[0]以降の文字列
+
+// 文字列連結 (StringBuffer)
+StringBuffer sb = new StringBuffer();
+for (int i=0; i<5; i++) {
+    sb.append("Hello! ");
+}
+```
+
+[目次へ戻る](#目次)
+
+## メモリ
+
+```java
+Runtime r = Runtime.getRuntime();
+long fm = r.freeMemory();   // 残りメモリ容量
+long tm = r.totalMemory();  // 現在のメモリ総容量
+long mm = r.maxMemory();    // メモリ総容量の限界値
+```
+
+[目次へ戻る](#目次)
+
+[目次へ戻る](#目次)
+
+[目次へ戻る](#目次)
+
+
