@@ -1,6 +1,6 @@
 # About Java
 
-*javac 25
+*Java 25
 
 ## 目次
 
@@ -23,20 +23,22 @@
 - [Queue](#queue)
 - [イテレータ](#イテレータ)
 - [アルゴリズム](#アルゴリズム)
+- [Stream API](#stream-api)
 - [メモリ](#メモリ)
 - [文字列メソッド](#文字列メソッド)
 - [数学メソッド](#数学メソッド)
 
 ## 命名規則
 
+**一覧**
+
 |種類|命名規則|例|
 |-|-|-|
-|クラス名|PascalCase|`MyClass`|
-|メソッド名|camelCase|`myMethod()`|
-|getter|camelCase|`getName()`|
-|setter|camelCase|`setName()`|
-|変数名|camelCase|`myVariable`|
-|定数名|SNAKE_CASE|`MY_CONST`|
+|クラス|PascalCase|class `MyClass`|
+|フィールド|camelCase|private int `myField`|
+|メソッド|camelCase|void `myMethod()`|
+|変数|camelCase|int `myVariable`|
+|定数|SNAKE_CASE|static final int `MY_CONST`|
 
 [⬆︎目次へ戻る](#目次)
 
@@ -94,6 +96,12 @@ switch (result) {
     default:
         break;
 }
+
+Character result = switch (score) {
+    case 3  -> 'A';
+    case 2  -> 'B';
+    default -> 'C';
+};
 ```
 
 [⬆︎目次へ戻る](#目次)
@@ -348,6 +356,8 @@ x = list.contains(10);  // 値[0]が存在するか？
 x = list.isEmpty();     // 要素数が0か？
 x = list.size();        // 要素数
 x = list.indexOf(20);   // 値[0]の位置
+
+List<String> list = List.of("a", "b", "c"); // 不変リスト
 ```
 
 [⬆︎目次へ戻る](#目次)
@@ -369,6 +379,8 @@ hash.clear();           // 要素を全て削除
 x = hash.contains("A"); // 値[0]が存在するか？
 x = hash.isEmpty();     // 要素数が0か？
 x = hash.size();        // 要素数
+
+Set<String> set = Set.of("a", "b", "c");    // 不変セット
 ```
 
 [⬆︎目次へ戻る](#目次)
@@ -490,6 +502,50 @@ int n = Collections.min(numbers);   // 最小値
 Collections.shuffle(numbers);       // シャッフル
 int cnt = Collections.frequency(numbers, 1);    // リスト[0]での要素[1]の出現数
 Collections.swap(numbers, 0, 2);    // リスト[0]での位置[1],[2]の要素を入れ替える
+```
+
+[⬆︎目次へ戻る](#目次)
+
+## Stream API
+
+**中間操作**
+
+```java
+List<Integer> list = Arrays.asList(5, 30, 10, 15, 20, 25);
+
+list.stream()
+    .filter(num -> num >= 10)           // trueの要素のみ残す
+    .map(num -> num + 5)                // 要素を変換する
+    .sorted()                           // ソート
+    .sorted(Comparator.reverseOrder())  // 逆順ソート
+    .forEach(num -> IO.println(num))    // （終端操作）出力
+    ;
+```
+
+**終端操作**
+
+```java
+// 要素を集約
+List<Integer> bigList = list.stream()
+    .filter(n -> n >= 50)
+    .collect(Collectors.toList());
+
+// 要素数
+long cnt = list.stream()
+    .filter(n -> n >= 15)
+    .count();
+
+// いずれかが一致しているか？
+boolean isAnyMatch = list.stream().anyMatch(n -> n >= 30);
+
+// 全て一致しているか？
+boolean isAllMatch = list.stream().allMatch(n -> n >= 0);
+
+// いずれも一致しないか？
+boolean isNoneMatch = list.stream().noneMatch(n -> n > 30);
+
+// １つの値に集約
+int sum = list.stream().reduce(0, Integer::sum);
 ```
 
 [⬆︎目次へ戻る](#目次)
