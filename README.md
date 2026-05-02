@@ -20,11 +20,12 @@
 - [List](#list)
 - [Set](#set)
 - [Map](#map)
+- [Queue](#queue)
+- [イテレータ](#イテレータ)
+- [アルゴリズム](#アルゴリズム)
 - [メモリ](#メモリ)
-- [文字列操作](#文字列操作)
-- []()
-- []()
-- []()
+- [文字列メソッド](#文字列メソッド)
+- [数学メソッド](#数学メソッド)
 
 ## 命名規則
 
@@ -66,9 +67,9 @@ java App
 
 `int`・`byte`・`short`・`long`・`double`・`float`・`boolean`・`char`
 
-**参照型**
+**ラッパークラス**
 
-`String`・`Integer`・`Double`
+`Integer`, `Byte`, `Short`, `Long`, `Double`, `Float`, `Boolean`, `Character`, `String`
 
 [⬆︎目次へ戻る](#目次)
 
@@ -425,6 +426,74 @@ x = deque.descendingIterator();         // 逆順イテレータ
 
 [⬆︎目次へ戻る](#目次)
 
+## イテレータ
+
+**Iterator**
+
+```java
+List<Integer> list = new ArrayList<>();
+list.add(10);
+list.add(20);
+list.add(30);
+
+// while
+Iterator<Integer> iter = list.iterator();
+while (iter.hasNext()) {
+    IO.println(iter.next());
+}
+
+// for
+for (Iterator<Integer> ite = list.iterator(); ite.hasNext();) {
+    IO.println(ite.next());
+}
+```
+
+**ListIterator**
+
+```java
+ListIterator<Integer> it = list.listIterator();
+Object x = null;
+
+x = it.hasNext();           // 次のデータがあるか？
+x = it.next();              // 次のデータを取得
+x = it.hasPrevious();       // 前のデータがあるか？
+x = it.previous();          // 前のデータを取得
+x = it.nextIndex();         // 次のインデックス
+x = it.previousIndex();     // 前のインデックス
+it.remove();                // データを削除
+
+while (it.hasNext()) {
+    IO.println(it.next());
+}
+```
+
+[⬆︎目次へ戻る](#目次)
+
+## アルゴリズム
+
+**Collections**
+
+```java
+ArrayList<Integer> numbers = new ArrayList<>();
+numbers.add(4);
+numbers.add(1);
+numbers.add(3);
+numbers.add(9);
+numbers.add(1);
+
+IO.println(numbers);
+
+Collections.sort(numbers);          // ソート
+Collections.sort(numbers, Collections.reverseOrder());  // 逆順ソート
+int x = Collections.max(numbers);   // 最大値
+int n = Collections.min(numbers);   // 最小値
+Collections.shuffle(numbers);       // シャッフル
+int cnt = Collections.frequency(numbers, 1);    // リスト[0]での要素[1]の出現数
+Collections.swap(numbers, 0, 2);    // リスト[0]での位置[1],[2]の要素を入れ替える
+```
+
+[⬆︎目次へ戻る](#目次)
+
 ## メモリ
 
 ```java
@@ -436,81 +505,101 @@ long mm = r.maxMemory();    // メモリ総容量の限界値
 
 [⬆︎目次へ戻る](#目次)
 
-## 文字列操作
+## 文字列メソッド
 
-**前提**
+**一覧**
 
 ```java
-String text = "Hello World";
+String text = "Hello";
 Object x = null;
-```
 
-**文字列切り出し**
+// 文字列切り出し
+x = text.charAt(0);                     // 位置[0]の文字
+x = text.subSequence(2, 4);             // 文字列の位置[0]~[1]をCharSequenceオブジェクトとして返す
+x = text.substring(2, 4);               // 文字列の位置[0]~[1]を部分文字列として返す
 
-```java
-x = text.charAt(6);                 // 位置[0]の文字
-x = text.substring(2, 5);           // 位置[0] ~ [1]までの文字列
-```
+// 文字列結合
+x = text.concat(" World");              // 末尾に文字列[0]を連結
+x = String.join("-", "hi", "world");    // 区切り文字[0]で文字列[1以降]を結合
 
-**文字列結合**
+// 文字列変換
+x = text.toLowerCase();                 // 小文字に変換
+x = text.toUpperCase();                 // 大文字に変換
+x = text.split(" ");                    // 文字列を分割文字列または正規表現[0]で置換
+x = text.replace("l", "p");             // 文字列の文字列[0]を文字列[1]に置換
+x = text.toCharArray();                 // 文字列を文字配列に変換
 
-```java
-x = text + "!";                     // 単純結合
-x = String.join("-", text, "!");    // 区切り文字[0]で文字列[1]に文字列[2]を結合
-```
+// 文字列比較
+x = text.equals("Hello");               // 文字列[0]と一致するか？
+x = text.equalsIgnoreCase("hello");     // 文字列[0]と一致するか？ (大文字小文字区別なし)
+x = text.compareTo("Hello");            // 文字列[0]と比較 (一致する場合0)
+x = text.compareToIgnoreCase("hello");  // 文字列[0]と比較 (一致する場合0・大文字小文字区別なし)
+x = text.contentEquals("He");           // 文字列が文字列[0]を全て含むか？
+x = "abc".matches("abc|def|ghi");       // 文字列が正規表現に一致するか？
 
-**文字列変換**
+// 文字列検索
+x = text.contains("He");                // 文字列に文字列[0]を含むか？
+x = text.startsWith("H");               // 文字列[0]で始まるか？
+x = text.endsWith("llo");               // 文字列[0]で終わるか？
+x = text.indexOf("el");                 // 文字列[0]が最初に出現する位置
+x = text.lastIndexOf("el");             // 文字列[0]が最後に出現する位置
 
-```java
-x = text.toUpperCase();             // 大文字化
-x = text.toLowerCase();             // 小文字化
-x = text.replace("Hello", "Hi");    // 文字列[0]を文字列[1]に置換
-```
-
-**文字列比較**
-
-```java
-x = text.equals("Hello");           // 文字列[0]と一致するか？
-x = text.equalsIgnoreCase("Ay");    // 文字列[0]と一致するか？ (大文字小文字区別なし)
-x = text.compareTo("Hello Worlf");  // 文字列[0]と比較 (数値で返す、0なら一致)
-```
-
-**文字列検索**
-
-```java
-x = text.contains("llo");       // 文字列[0]を含むか？
-x = text.startsWith("H");       // 文字列[0]で始まるか？
-x = text.endsWith("d");         // 文字列[0]で終わるか？
-x = text.indexOf("lo");         // 文字列[0]の位置 (存在しない場合-1)
-x = text.lastIndexOf("lo");     // 文字列[0]の位置 (後ろから検索・存在しない場合-1)
-```
-
-**その他**
-
-```java
-x = text.length();                  // 文字列の長さ
-x = text.split(" ");                // 文字[0]で分割し配列で返す
+// その他
+x = text.isEmpty();                             // 文字数が0か？
+x = text.length();                              // 文字列の長さ
+x = text.trim();                                // 文字列の両側の空白文字を削除
+x = String.format("Hi %s", "World");            // 書式設定
+x = "".copyValueOf("!?!".toCharArray());        // 文字配列[0]を文字列で返す
+x = "".copyValueOf("!?!".toCharArray(), 0, 1);  // 文字配列[0]の位置[1]から文字数[2]を文字列で返す
 ```
 
 **StringBuilder** - 無駄なメモリ割り当てをしないため、文字列結合で使える
 
 ```java
-StringBuilder sb = new StringBuilder();
-String s;
-sb.append("AB");
-s = sb.toString();
-sb.append("CDE");
-s = sb.toString();
+StringBuilder builder = new StringBuilder();
+String message;
+
+builder.append("AB");
+message = builder.toString();
+IO.println(message);
+
+builder.append("CD");
+message = builder.toString();
+IO.println(message);
 ```
 
 **StringBuffer** - 文字列連結で使える
 
 ```java
-StringBuffer sb = new StringBuffer();
+StringBuffer buffer = new StringBuffer();
+
 for (int i=0; i<5; i++) {
-    sb.append("HELLO! ");
+    buffer.append("HELLO! ");
 }
-System.out.println(sb);
+
+IO.println(buffer);
+```
+
+[⬆︎目次へ戻る](#目次)
+
+## 数学メソッド
+
+**一覧**
+
+```java
+Object x = null;
+
+x = Math.abs(-4.3);         // 絶対値
+x = Math.ceil(12.1);        // 最も近い整数に切り上げ
+x = Math.floor(14.9);       // 最も近い整数に切り捨て
+x = Math.floorDiv(10, 3);   // 除算 (=3)
+x = Math.floorMod(10, 3);   // 除算の余り (=1)
+x = Math.hypot(3, 4);       // x,yと0, 0の距離
+x = Math.max(21, 20);       // 最大値
+x = Math.min(11, 12);       // 最小値
+x = Math.random();          // 0~1間の乱数
+x = Math.rint(10.5);        // 最も近い整数に丸める (doubleで返す)
+x = Math.round(10.5);       // 最も近い整数に丸める (intで返す)
 ```
 
 [⬆︎目次へ戻る](#目次)
