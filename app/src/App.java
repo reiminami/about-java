@@ -1,4 +1,2 @@
-public class App {
-    void main() {
-    }
+void main() {
 }
