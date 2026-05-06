@@ -219,6 +219,16 @@ Rectangle r = new Rectangle(10, 20);
 IO.println(r.area());
 ```
 
+**シール・クラス**
+
+```java
+public sealed class Enemy permits Goblin, Monolith {}
+
+final class Goblin extends Enemy {}
+final class Monolith extends Enemy {}
+final class Cop extends Enemy {}    // 拡張できない
+```
+
 **OOP**
 
 - オブジェクト指向のメリットは「変更に対して柔軟に対応するため」。
